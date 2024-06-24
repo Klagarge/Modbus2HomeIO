@@ -95,7 +95,7 @@ func (h *home) GetShutterPosition(room Room, shutter Shutters) (uint16, error) {
 
 func (h *home) SetShuttersDirection(room Room, shutter Shutters, direction ShuttersDirection) error {
 	// Set local state in outputs map.
-	h.outputs[fmt.Sprintf("strs/%d/%s", shutter, room)] = direction
+	h.outputs[fmt.Sprintf("strs/%d/%s", shutter, room)] = string(direction)
 
 	// Send request and check response status.
 	response, err := h.client.Get(fmt.Sprintf("%s/strs/%s/%d/%s", h.baseURL, direction, shutter, room))

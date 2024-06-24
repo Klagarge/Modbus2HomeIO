@@ -32,9 +32,9 @@ func (h *home) SetHeatingOn(room Room, on bool) error {
 
 	// Set local state in outputs map.
 	if on {
-		h.outputs[fmt.Sprintf("sth/%s", room)] = maxPower
+		h.outputs[fmt.Sprintf("sth/%s", room)] = float64(maxPower)
 	} else {
-		h.outputs[fmt.Sprintf("sth/%s", room)] = 0
+		h.outputs[fmt.Sprintf("sth/%s", room)] = 0.0
 	}
 
 	// Send request and check response status.

@@ -40,6 +40,10 @@ func New(home homeio.Home) Simulation {
 	}
 
 	var err error
+	err = home.Poll()
+	if err != nil {
+		panic(err)
+	}
 	s.lastStep, err = home.GetTime()
 	if err != nil {
 		panic(err)
