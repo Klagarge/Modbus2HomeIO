@@ -2,21 +2,26 @@ package main
 
 import (
 	"Modbus2HomeIO/homeio"
+	"Modbus2HomeIO/homeiosim"
+	"Modbus2HomeIO/registers"
 	"crypto/x509"
+	"fmt"
 	"github.com/simonvetter/modbus"
 	"time"
 )
 
 func main() {
-
-	// Create the Home I/O client instance.
+	// Create the Home I/O REST client instance.
 	home, err := homeio.New("http://10.211.55.3:9797")
 	if err != nil {
 		panic(err)
 	}
 
+	// Create the energy simulation.
+	sim := homeiosim.New(home)
+
 	// Create the Modbus handler instance.
-	handler := NewModbusHandler(home)
+	handler := registers.NewHandler(home, sim)
 
 	// Create the Modbus TCP server instance.
 	plain, err := modbus.NewServer(&modbus.ServerConfiguration{
@@ -55,7 +60,13 @@ func main() {
 		panic(err)
 	}
 
+	// Poll the Home I/O REST API and run the simulation every 25ms.
 	for {
-		time.Sleep(1 * time.Second)
+		time.Sleep(25 * time.Millisecond)
+		err := home.Poll()
+		if err != nil {
+			fmt.Printf("Error polling Home I/O: %v\n", err)
+		}
+		sim.Step()
 	}
 }
