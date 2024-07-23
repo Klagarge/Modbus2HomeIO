@@ -4,15 +4,18 @@ import (
 	"Modbus2HomeIO/homeio"
 	"Modbus2HomeIO/homeiosim"
 	"Modbus2HomeIO/registers"
-	"crypto/x509"
+	"crypto/tls"
 	"fmt"
-	"github.com/simonvetter/modbus"
+	"log"
+	"os"
 	"time"
+
+	"github.com/simonvetter/modbus"
 )
 
 func main() {
 	// Create the Home I/O REST client instance.
-	home, err := homeio.New("http://10.211.55.3:9797")
+	home, err := homeio.New("http://127.0.0.1:9797")
 	if err != nil {
 		panic(err)
 	}
@@ -38,18 +41,28 @@ func main() {
 		panic(err)
 	}
 
+	serverCertPool, _ := modbus.LoadCertPool("CA-OT-Security.crt")
+
 	// Create the Modbus TCP+TLS server instance.
-	cert, err := GenerateSelfSignedCertificate("Modbus2HomeIO")
+	// cert, err := GenerateSelfSignedCertificate("Modbus2HomeIO")
+	cert, err := tls.LoadX509KeyPair("HomeIoServerTLS.crt", "key.pem")
+
 	if err != nil {
 		panic(err)
+	}
+
+	err = os.WriteFile("cert.pem", cert.Certificate[0], 0644)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	tls, err := modbus.NewServer(&modbus.ServerConfiguration{
 		URL:           "tcp+tls://0.0.0.0:5802",
 		Timeout:       30 * time.Second,
 		MaxClients:    10,
-		TLSServerCert: cert,
-		TLSClientCAs:  &x509.CertPool{},
+		TLSServerCert: &cert,
+		TLSClientCAs:  serverCertPool,
+		//TLSClientCAs: &x509.CertPool{},
 	}, handler)
 	if err != nil {
 		panic(err)
