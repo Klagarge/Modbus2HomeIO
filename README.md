@@ -1,5 +1,6 @@
 # Home IO Modbus interface
 This program is a modbus interface for Home I/O simulator.
+Original work on [HEI repository](https://github.com/hei-synd-ot-security/Modbus2HomeIO)
 
 ## Prerequisites
 - Home I/O
