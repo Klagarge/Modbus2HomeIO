@@ -4,7 +4,6 @@ Original work on [HEI repository](https://github.com/hei-synd-ot-security/Modbus
 
 ## Prerequisites
 - Home I/O
-- The modbus interface for Home I/O : [Modbus2HomeIO](https://github.com/hei-synd-ot-security/Modbus2HomeIO)
 
 ## Usage
 1. Run the program
