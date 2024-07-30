@@ -1,16 +1,14 @@
 package main
 
 import (
+	"ControllerGO/modbus-lib"
 	"Modbus2HomeIO/homeio"
 	"Modbus2HomeIO/homeiosim"
+	"Modbus2HomeIO/modbus-lib"
 	"Modbus2HomeIO/registers"
 	"crypto/tls"
 	"fmt"
-	"log"
-	"os"
 	"time"
-
-	"github.com/simonvetter/modbus"
 )
 
 func main() {
@@ -49,11 +47,6 @@ func main() {
 
 	if err != nil {
 		panic(err)
-	}
-
-	err = os.WriteFile("cert.pem", cert.Certificate[0], 0644)
-	if err != nil {
-		log.Fatal(err)
 	}
 
 	tls, err := modbus.NewServer(&modbus.ServerConfiguration{
