@@ -3,7 +3,8 @@ package registers
 import (
 	"Modbus2HomeIO/homeio"
 	"fmt"
-	"github.com/simonvetter/modbus"
+
+	modbus "github.com/Klagarge/modbusGo"
 )
 
 func (m *Handler) HandleInputRegisters(req *modbus.InputRegistersRequest) (res []uint16, err error) {

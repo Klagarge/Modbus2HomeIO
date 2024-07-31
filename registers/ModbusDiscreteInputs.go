@@ -3,7 +3,8 @@ package registers
 import (
 	"Modbus2HomeIO/homeio"
 	"fmt"
-	"github.com/simonvetter/modbus"
+
+	modbus "github.com/Klagarge/modbusGo"
 )
 
 /* Handler interface implementation, handle Read Discrete Inputs (0x04) */

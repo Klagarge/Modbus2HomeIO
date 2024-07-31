@@ -4,7 +4,8 @@ import (
 	"Modbus2HomeIO/homeio"
 	"Modbus2HomeIO/nrgsim"
 	"fmt"
-	"github.com/simonvetter/modbus"
+
+	modbus "github.com/Klagarge/modbusGo"
 )
 
 func (m *Handler) HandleHoldingRegisters(req *modbus.HoldingRegistersRequest) (res []uint16, err error) {

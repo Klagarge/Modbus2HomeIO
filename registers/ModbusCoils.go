@@ -3,7 +3,8 @@ package registers
 import (
 	"Modbus2HomeIO/homeio"
 	"fmt"
-	"github.com/simonvetter/modbus"
+
+	modbus "github.com/Klagarge/modbusGo"
 )
 
 /* Handler interface implementation, handle Read Coils (0x01) and Write Coils (0x15) */
